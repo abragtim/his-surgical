@@ -1,6 +1,6 @@
 package his.department.surgical.db.entities;
 
-import his.department.surgical.db.entities.composite_keys.SurgeryCompositeKey;
+import his.department.surgical.db.entities.composite_keys.SurgeryFinishTimeCompositeKey;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "surgery_finish_time")
-@IdClass(SurgeryFinishTimeEntity.class)
+@IdClass(SurgeryFinishTimeCompositeKey.class)
 public class SurgeryFinishTimeEntity implements Serializable {
 
     @Id
@@ -24,7 +24,6 @@ public class SurgeryFinishTimeEntity implements Serializable {
     @Nonnull
     private SurgeryEntity surgery;
 
-    @Id  // TODO: fix it here https://github.com/abragtim/his-surgical/issues/10
     @ManyToOne(optional = false)
     @JoinColumns({
             @JoinColumn(name = "end_date", referencedColumnName = "date"),
