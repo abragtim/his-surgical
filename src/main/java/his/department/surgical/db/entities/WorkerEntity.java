@@ -3,6 +3,8 @@ package his.department.surgical.db.entities;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "worker")
@@ -30,8 +32,15 @@ public class WorkerEntity {
     @Column(name = "job_title", nullable = false)
     private String jobTitle;
 
+    @OneToMany(mappedBy = "supporter", fetch = FetchType.EAGER)
+    private Set<SurgerySupporterEntity> surgeriesAsSupporter;
+
     public String getPhone() {
         return phone;
+    }
+
+    public Set<SurgerySupporterEntity> getSurgeriesAsSupporter() {
+        return surgeriesAsSupporter;
     }
 
     @Override
