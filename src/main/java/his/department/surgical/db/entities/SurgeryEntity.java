@@ -4,8 +4,7 @@ import his.department.surgical.db.entities.composite_keys.SurgeryCompositeKey;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Set;
 
 @Entity
 @IdClass(SurgeryCompositeKey.class)
@@ -33,12 +32,19 @@ public class SurgeryEntity {
     @JoinColumn(name = "operating")
     private DoctorEntity leadSurgeon;
 
+    @OneToMany(mappedBy = "surgery", fetch = FetchType.EAGER)
+    private Set<SurgerySupporterEntity> supporters;
+
     public Integer getOperatingRoomNumber() {
         return operatingRoomNumber;
     }
 
     public DatetimeEntity getStartDateTime() {
         return startDateTime;
+    }
+
+    public Set<SurgerySupporterEntity> getSupporters() {
+        return supporters;
     }
 
     @Override
