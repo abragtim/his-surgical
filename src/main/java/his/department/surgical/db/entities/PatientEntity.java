@@ -1,6 +1,7 @@
 package his.department.surgical.db.entities;
 
 import his.department.surgical.enums.PatientStatus;
+import his.department.surgical.objects.Patient;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 
@@ -48,12 +49,30 @@ public class PatientEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "condition", nullable = false)
+    @Column(name = "condition",
+            nullable = false,
+            columnDefinition = "patient_status")
     @Nonnull
     @Enumerated(EnumType.STRING)
     private PatientStatus condition;
 
     public PatientEntity() {}
+
+    public PatientEntity(Patient patient,
+                         HospitalBedEntity hospitalBed) {
+        this.medicalId = patient.getMedicalId();
+        this.hospitalBed = hospitalBed;
+        this.age = patient.getAge();
+        this.idCardNumber = patient.getIdCardNumber();
+        this.insuranceNumber = patient.getInsuranceNumber();
+        this.name = patient.getName();
+        this.dateOfBirth = patient.getDateOfBirth();
+        this.phone = patient.getPhone();
+        this.sex = patient.getSex();
+        this.email = patient.getEmail();
+        this.condition = (patient.getCondition() == null) ?
+                PatientStatus.Undetermined : patient.getCondition();
+    }
 
     public Integer getMedicalId() {
         return medicalId;

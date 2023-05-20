@@ -1,27 +1,14 @@
-package his.department.surgical.db.entities;
+package his.department.surgical.objects;
 
-import his.department.surgical.objects.HospitalBed;
-import jakarta.persistence.*;
-import java.io.Serializable;
+public class HospitalBed {
 
-@Entity
-@Table(name = "hospital_bed")
-@IdClass(HospitalBedEntity.class)
-public class HospitalBedEntity implements Serializable {
-
-    @Id
-    @Column(name = "room_number", nullable = false)
     private Integer roomNumber;
 
-    @Id
-    @Column(name = "bed_number", nullable = false)
     private Integer bedNumber;
 
-    public HospitalBedEntity() {}
-
-    public HospitalBedEntity(HospitalBed hospitalBed) {
-        this.roomNumber = hospitalBed.getRoomNumber();
-        this.bedNumber = hospitalBed.getBedNumber();
+    public HospitalBed(Integer roomNumber, Integer bedNumber) {
+        this.roomNumber = roomNumber;
+        this.bedNumber = bedNumber;
     }
 
     public Integer getRoomNumber() {
@@ -34,7 +21,7 @@ public class HospitalBedEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "HospitalBedEntity{" +
+        return "HospitalBed{" +
                 "roomNumber=" + roomNumber +
                 ", bedNumber=" + bedNumber +
                 '}';
@@ -43,7 +30,7 @@ public class HospitalBedEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof HospitalBedEntity that)) return false;
+        if (!(o instanceof HospitalBed that)) return false;
 
         if (!getRoomNumber().equals(that.getRoomNumber())) return false;
         return getBedNumber().equals(that.getBedNumber());
