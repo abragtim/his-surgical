@@ -32,10 +32,7 @@ public class DatetimeEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "DatetimeEntity{" +
-                "date=" + date +
-                ", time=" + time +
-                '}';
+        return date + " " + time;
     }
 
     @Override

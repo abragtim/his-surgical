@@ -10,6 +10,14 @@ public class SurgeryCompositeKey implements Serializable {
 
     private DatetimeEntity startDateTime;
 
+    protected SurgeryCompositeKey() {
+    }
+
+    public SurgeryCompositeKey(Integer operatingRoomNumber, DatetimeEntity startDateTime) {
+        this.operatingRoomNumber = operatingRoomNumber;
+        this.startDateTime = startDateTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

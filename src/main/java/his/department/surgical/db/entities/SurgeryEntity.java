@@ -43,6 +43,14 @@ public class SurgeryEntity {
         return startDateTime;
     }
 
+    public PatientEntity getPatient() {
+        return patient;
+    }
+
+    public DoctorEntity getLeadSurgeon() {
+        return leadSurgeon;
+    }
+
     public Set<SurgerySupporterEntity> getSupporters() {
         return supporters;
     }

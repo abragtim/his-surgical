@@ -78,6 +78,10 @@ public class PatientEntity {
         return medicalId;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "PatientEntity{" +

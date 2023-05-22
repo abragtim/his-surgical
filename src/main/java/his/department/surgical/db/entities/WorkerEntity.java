@@ -39,6 +39,10 @@ public class WorkerEntity {
         return phone;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Set<SurgerySupporterEntity> getSurgeriesAsSupporter() {
         return surgeriesAsSupporter;
     }
