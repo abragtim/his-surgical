@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Hospital Beds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #555;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-patient-button {
+            background-color: green;
+            margin-left: auto;
+        }
+
+        .main-page-button {
+            background-color: green;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>Available Hospital Beds</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Room Number</th>
+        <th>Bed Number</th>
+    </tr>
+    </thead>
+    <tbody id="bedsTable">
+    <!-- The table rows will be dynamically populated here -->
+    </tbody>
+</table>
+
+<div class="pagination">
+    <button id="prevButton" disabled>Previous</button>
+    <button id="nextButton" disabled>Next</button>
+</div>
+
+<div class="button-container">
+    <button class="main-page-button" onclick="location.href='/index.html'">Main page</button>
+    <button class="add-patient-button" onclick="location.href='/create-patient.html'">Add new patient</button>
+</div>
+
+<script>
+    var currentPage = 0;
+    var totalPages = 0;
+
+    function fetchBeds(page) {
+        fetch('/free-beds?page=' + page)
+            .then(response => response.json())
+            .then(data => {
+                const bedsTable = document.getElementById('bedsTable');
+                bedsTable.innerHTML = ''; // Clear previous table rows
+
+                // Iterate over the bed data and create table rows
+                data.content.forEach(bed => {
+                    const row = document.createElement('tr');
+                    const roomNumberCell = document.createElement('td');
+                    const bedNumberCell = document.createElement('td');
+
+                    roomNumberCell.textContent = bed.roomNumber;
+                    bedNumberCell.textContent = bed.bedNumber;
+
+                    row.appendChild(roomNumberCell);
+                    row.appendChild(bedNumberCell);
+                    bedsTable.appendChild(row);
+                });
+
+                // Update current page and total pages
+                currentPage = data.number;
+                totalPages = data.totalPages;
+
+                updatePaginationButtons();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function updatePaginationButtons() {
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+
+        prevButton.disabled = currentPage === 0; // Disable "Previous" button on first page
+        nextButton.disabled = currentPage === totalPages - 1; // Disable "Next" button on last page
+    }
+
+    // Fetch beds for the initial page
+    fetchBeds(currentPage);
+
+    // Previous button click event handler
+    document.getElementById('prevButton').addEventListener('click', function() {
+        if (currentPage > 0) {
+            fetchBeds(currentPage - 1);
+        }
+    });
+
+    // Next button click event handler
+    document.getElementById('nextButton').addEventListener('click', function() {
+        if (currentPage < totalPages - 1) {
+            fetchBeds(currentPage + 1);
+        }
+    });
+</script>
+</body>
+</html>

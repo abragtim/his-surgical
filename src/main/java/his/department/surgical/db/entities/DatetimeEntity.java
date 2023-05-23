@@ -20,7 +20,12 @@ public class DatetimeEntity implements Serializable {
     @Column(name = "time", nullable = false)
     private Time time;
 
-    public DatetimeEntity() {}
+    protected DatetimeEntity() {}
+
+    public DatetimeEntity(Date date, Time time) {
+        this.date = date;
+        this.time = time;
+    }
 
     public Date getDate() {
         return date;

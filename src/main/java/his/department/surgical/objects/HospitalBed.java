@@ -1,5 +1,8 @@
 package his.department.surgical.objects;
 
+import his.department.surgical.db.entities.HospitalBedEntity;
+import his.department.surgical.db.entities.SurgeryEntity;
+
 public class HospitalBed {
 
     private Integer roomNumber;
@@ -9,6 +12,12 @@ public class HospitalBed {
     public HospitalBed(Integer roomNumber, Integer bedNumber) {
         this.roomNumber = roomNumber;
         this.bedNumber = bedNumber;
+    }
+
+    public static HospitalBed fromEntity(HospitalBedEntity entity) {
+        return new HospitalBed(
+                entity.getRoomNumber(),
+                entity.getBedNumber());
     }
 
     public Integer getRoomNumber() {

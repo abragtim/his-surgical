@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add new patient</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        select {
+            height: 34px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#createPatientForm').submit(function(e) {
+                e.preventDefault();
+
+                var formData = {
+                    medicalId: parseInt($('#medicalId').val()),
+                    roomNumber: parseInt($('#roomNumber').val()),
+                    bedNumber: parseInt($('#bedNumber').val()),
+                    sex: $('#sex').val(),
+                    patientStatus: $('#patientStatus').val()
+                };
+
+                if ($('#age').val() !== '')
+                    formData.age = parseInt($('#age').val());
+                if ($('#insuranceNumber').val() !== '')
+                    formData.insuranceNumber = $('#insuranceNumber').val();
+                if ($('#name').val() !== '')
+                    formData.name = $('#name').val();
+                if ($('#idCardNumber').val() !== '')
+                    formData.idCardNumber = $('#idCardNumber').val();
+                if ($('#phone').val() !== '')
+                    formData.phone = $('#phone').val();
+                if ($('#email').val() !== '')
+                    formData.email = $('#email').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/patients/create-patient',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        // Redirect to success-page.html
+                        window.location.href = '/successfully-created-patient-page.html';
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>Create Patient</h1>
+<form id="createPatientForm">
+    <label for="medicalId">Medical ID:</label>
+    <input type="text" id="medicalId" name="medicalId" required>
+
+    <label for="roomNumber">Room Number:</label>
+    <input type="number" id="roomNumber" name="roomNumber" required>
+
+    <label for="bedNumber">Bed Number:</label>
+    <input type="number" id="bedNumber" name="bedNumber" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age">
+
+    <label for="insuranceNumber">Insurance Number:</label>
+    <input type="text" id="insuranceNumber" name="insuranceNumber">
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+
+    <label for="dateOfBirth">Date of Birth:</label>
+    <input type="date" id="dateOfBirth" name="dateOfBirth">
+
+    <label for="idCardNumber">ID Card Number:</label>
+    <input type="text" id="idCardNumber" name="idCardNumber">
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone">
+
+    <label for="sex">Sex:</label>
+    <select id="sex" name="sex" required>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+    </select>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+
+    <label for="patientStatus">Patient Status:</label>
+    <select id="patientStatus" name="patientStatus" required>
+        <option value="Undetermined">Undetermined</option>
+        <option value="Fair">Fair</option>
+        <option value="Good">Good</option>
+        <option value="Serious">Serious</option>
+        <option value="Critical">Critical</option>
+    </select>
+
+    <input type="submit" value="Create Patient">
+</form>
+</body>
+</html>

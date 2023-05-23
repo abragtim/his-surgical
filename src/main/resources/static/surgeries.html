@@ -113,7 +113,7 @@
                 displayPagination(response.totalPages);
             }
         };
-        xhr.open('GET', '/surgeries?page=' + page, true);
+        xhr.open('GET', '/active-surgeries?page=' + page, true);
         xhr.send();
     }
 
